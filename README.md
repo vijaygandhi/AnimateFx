@@ -1,12 +1,12 @@
 # AnimateFx
 
-Library to animate JavaFX objects.
+Library to animate JavaFX objects (Node).
 
 ```java
-AnimateFx.fadeOutLeft(animationNode, 500 /* duration */, 100 /* distance */, onFinished);
-AnimateFx.fadeOutRight(animationNode, 500, 100, onFinished);
-AnimateFx.flash(animationNode, 500, onFinished);
-AnimateFx.pulse(animationNode, 500, 1.2 /* scaleTo */, onFinished);
-AnimateFx.rubberBand(animationNode, 500, onFinished);
-AnimateFx.zoomIn(animationNode, 500, onFinished);
+AnimateFx.fadeOutLeft(node, 500 /* duration, millis */, 100 /* distance */, onFinished);
+AnimateFx.fadeOutRight(node, 500, 100, onFinished);
+AnimateFx.flash(node, 500, onFinished);
+AnimateFx.pulse(node, 500, 1.2 /* scaleTo */, onFinished);
+AnimateFx.rubberBand(node, 500, onFinished);
+AnimateFx.zoomIn(node, 500, onFinished);
 ```
