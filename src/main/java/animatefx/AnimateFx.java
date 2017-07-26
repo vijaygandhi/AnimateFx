@@ -114,9 +114,9 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         this.parallel.setOnFinished(this);
     }
 
-    public AnimateFx fadeTo(double from, double to, float opacity) {
+    public AnimateFx fadeTo(double startTimeFraction, double endTimeFraction, float opacity) {
         FadeTransition fadeTransition = new FadeTransition();
-        fadeTransition.setDuration(Duration.millis(duration * to - duration * from));
+        fadeTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         fadeTransition.setToValue(opacity);
         sequence.getChildren().add(fadeTransition);
         return this;
@@ -130,29 +130,29 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         return this;
     }
 
-    public AnimateFx scaleX(double from, double to, double scaleX) {
+    public AnimateFx scaleX(double startTimeFraction, double endTimeFraction, double scaleX) {
         double unitScaleX = node.getScaleX();
         ScaleTransition scaleTransition = new ScaleTransition();
-        scaleTransition.setDuration(Duration.millis(duration * to - duration * from));
+        scaleTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         scaleTransition.setToX(unitScaleX * scaleX);
         sequence.getChildren().add(scaleTransition);
         return this;
     }
 
-    public AnimateFx scaleY(double from, double to, double scaleY) {
+    public AnimateFx scaleY(double startTimeFraction, double endTimeFraction, double scaleY) {
         double unitScaleY = node.getScaleY();
         ScaleTransition scaleTransition = new ScaleTransition();
-        scaleTransition.setDuration(Duration.millis(duration * to - duration * from));
+        scaleTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         scaleTransition.setToY(unitScaleY * scaleY);
         sequence.getChildren().add(scaleTransition);
         return this;
     }
 
-    public AnimateFx scaleXY(double from, double to, double scaleX, double scaleY) {
+    public AnimateFx scaleXY(double startTimeFraction, double endTimeFraction, double scaleX, double scaleY) {
         double unitScaleX = node.getScaleX();
         double unitScaleY = node.getScaleY();
         ScaleTransition scaleTransition = new ScaleTransition();
-        scaleTransition.setDuration(Duration.millis(duration * to - duration * from));
+        scaleTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         scaleTransition.setToX(unitScaleX * scaleX);
         scaleTransition.setToY(unitScaleY * scaleY);
         sequence.getChildren().add(scaleTransition);
@@ -160,17 +160,17 @@ public class AnimateFx implements EventHandler<ActionEvent> {
     }
 
     private AnimateFx parallel() {
-        addSequence();
+        commitSequence();
         sequence = new SequentialTransition();
         return this;
     }
 
     private void start() {
-        addSequence();
+        commitSequence();
         parallel.play();
     }
 
-    private void addSequence() {
+    private void commitSequence() {
         if (sequence.getChildren().isEmpty()) {
             return;
         }
