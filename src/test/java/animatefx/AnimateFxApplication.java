@@ -28,6 +28,15 @@ public class AnimateFxApplication extends Application {
 
         addAnimationNode();
 
+        Button btnFadeIn = new Button("fadeIn");
+        btnFadeIn.setOnAction(e -> AnimateFx.fadeIn(animationNode, 1000, onFinished));
+
+        Button btnFadeInDown = new Button("fadeInDown");
+        btnFadeInDown.setOnAction(e -> AnimateFx.fadeInDown(animationNode, 1000, 100, onFinished));
+
+        Button btnFadeInUp = new Button("fadeInUp");
+        btnFadeInUp.setOnAction(e -> AnimateFx.fadeInUp(animationNode, 1000, 100, onFinished));
+
         Button btnFadeOutLeft = new Button("fadeOutLeft");
         btnFadeOutLeft.setOnAction(e -> AnimateFx.fadeOutLeft(animationNode, 500, 100, onFinished));
 
@@ -47,7 +56,8 @@ public class AnimateFxApplication extends Application {
         btnZoomIn.setOnAction(e -> AnimateFx.zoomIn(animationNode, 500, onFinished));
 
         VBox controls = new VBox();
-        controls.getChildren().addAll(btnFadeOutLeft, btnFadeOutRight, btnFlash, btnPulse, btnRubberBand);
+        controls.getChildren().addAll(btnFadeIn, btnFadeInDown, btnFadeInUp, btnFadeOutLeft, btnFadeOutRight);
+        controls.getChildren().addAll(btnFlash, btnPulse, btnRubberBand);
         controls.getChildren().addAll(btnZoomIn);
 
         BorderPane bp = new BorderPane();

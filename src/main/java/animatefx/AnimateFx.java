@@ -21,6 +21,31 @@ public class AnimateFx implements EventHandler<ActionEvent> {
 
     private static Set<Node> animatingNodes = new HashSet<Node>();
 
+    public static void fadeIn(Node node, long millis, EventHandler<ActionEvent> onFinished) {
+        node.setOpacity(0);
+        animate(
+                node,
+                millis,
+                animation -> animation.fadeTo(0, 1, 1),
+                onFinished);
+    }
+
+    public static void fadeInDown(Node node, long millis, int distance, EventHandler<ActionEvent> onFinished) {
+        node.setOpacity(0);
+        animate(
+                node,
+                millis,
+                animation -> animation
+                        .fadeTo(0, 1, 1)
+                        .newSequence()
+                        .moveY(0, 1, distance),
+                onFinished);
+    }
+
+    public static void fadeInUp(Node node, long millis, int distance, EventHandler<ActionEvent> onFinished) {
+        fadeInDown(node, millis, -distance, onFinished);
+    }
+
     public static void fadeOutLeft(Node node, long millis, int distance, EventHandler<ActionEvent> onFinished) {
         fadeOutRight(node, millis, -distance, onFinished);
     }
@@ -31,7 +56,7 @@ public class AnimateFx implements EventHandler<ActionEvent> {
                 millis,
                 animation -> animation
                         .fadeTo(0, 1, 0)
-                        .parallel()
+                        .newSequence()
                         .moveX(distance),
                 onFinished);
     }
@@ -130,6 +155,14 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         return this;
     }
 
+    public AnimateFx moveY(double startTimeFraction, double endTimeFraction, double distanceY) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setDuration(Duration.millis(duration));
+        translateTransition.setByY(distanceY);
+        sequence.getChildren().add(translateTransition);
+        return this;
+    }
+
     public AnimateFx scaleX(double startTimeFraction, double endTimeFraction, double scaleX) {
         double unitScaleX = node.getScaleX();
         ScaleTransition scaleTransition = new ScaleTransition();
@@ -159,7 +192,7 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         return this;
     }
 
-    private AnimateFx parallel() {
+    private AnimateFx newSequence() {
         commitSequence();
         sequence = new SequentialTransition();
         return this;
