@@ -3,10 +3,13 @@
 Library to animate JavaFX objects (Node).
 
 ```java
-AnimateFx.fadeOutLeft(node, 500 /* duration, millis */, 100 /* distance */, onFinished);
-AnimateFx.fadeOutRight(node, 500, 100, onFinished);
-AnimateFx.flash(node, 500, onFinished);
-AnimateFx.pulse(node, 500, 1.2 /* scaleTo */, onFinished);
-AnimateFx.rubberBand(node, 500, onFinished);
-AnimateFx.zoomIn(node, 500, onFinished);
+AnimateFx.fadeIn(node, millis, onFinished);
+AnimateFx.fadeInDown(animationNode, millis, distance, onFinished);
+AnimateFx.fadeInUp(animationNode, millis, distance, onFinished);
+AnimateFx.fadeOutLeft(node, millis, distance, onFinished);
+AnimateFx.fadeOutRight(node, millis, distance, onFinished);
+AnimateFx.flash(node, millis, onFinished);
+AnimateFx.pulse(node, millis, scaleTo, onFinished);
+AnimateFx.rubberBand(node, millis, onFinished);
+AnimateFx.zoomIn(node, millis, onFinished);
 ```
