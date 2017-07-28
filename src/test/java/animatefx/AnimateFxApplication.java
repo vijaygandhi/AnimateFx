@@ -28,6 +28,9 @@ public class AnimateFxApplication extends Application {
 
         addAnimationNode();
 
+        Button btnBounceIn = new Button("bounceIn");
+        btnBounceIn.setOnAction(e -> AnimateFx.bounceIn(animationNode, 500, onFinished));
+
         Button btnFadeIn = new Button("fadeIn");
         btnFadeIn.setOnAction(e -> AnimateFx.fadeIn(animationNode, 1000, onFinished));
 
@@ -56,6 +59,7 @@ public class AnimateFxApplication extends Application {
         btnZoomIn.setOnAction(e -> AnimateFx.zoomIn(animationNode, 500, onFinished));
 
         VBox controls = new VBox();
+        controls.getChildren().addAll(btnBounceIn);
         controls.getChildren().addAll(btnFadeIn, btnFadeInDown, btnFadeInUp, btnFadeOutLeft, btnFadeOutRight);
         controls.getChildren().addAll(btnFlash, btnPulse, btnRubberBand);
         controls.getChildren().addAll(btnZoomIn);
