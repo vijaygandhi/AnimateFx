@@ -31,6 +31,18 @@ public class AnimateFxApplication extends Application {
         Button btnBounceIn = new Button("bounceIn");
         btnBounceIn.setOnAction(e -> AnimateFx.bounceIn(animationNode, 500, onFinished));
 
+        Button btnBounceInDown = new Button("bounceInDown");
+        btnBounceInDown.setOnAction(e -> AnimateFx.bounceInDown(animationNode, 500, 100, onFinished));
+
+        Button btnBounceInLeft = new Button("bounceInLeft");
+        btnBounceInLeft.setOnAction(e -> AnimateFx.bounceInLeft(animationNode, 500, 300, onFinished));
+
+        Button btnBounceInRight = new Button("bounceInRight");
+        btnBounceInRight.setOnAction(e -> AnimateFx.bounceInRight(animationNode, 500, 300, onFinished));
+
+        Button btnBounceInUp = new Button("btnBounceInUp");
+        btnBounceInUp.setOnAction(e -> AnimateFx.bounceInUp(animationNode, 500, 100, onFinished));
+
         Button btnFadeIn = new Button("fadeIn");
         btnFadeIn.setOnAction(e -> AnimateFx.fadeIn(animationNode, 1000, onFinished));
 
@@ -59,7 +71,7 @@ public class AnimateFxApplication extends Application {
         btnZoomIn.setOnAction(e -> AnimateFx.zoomIn(animationNode, 500, onFinished));
 
         VBox controls = new VBox();
-        controls.getChildren().addAll(btnBounceIn);
+        controls.getChildren().addAll(btnBounceIn, btnBounceInDown, btnBounceInUp, btnBounceInLeft, btnBounceInRight);
         controls.getChildren().addAll(btnFadeIn, btnFadeInDown, btnFadeInUp, btnFadeOutLeft, btnFadeOutRight);
         controls.getChildren().addAll(btnFlash, btnPulse, btnRubberBand);
         controls.getChildren().addAll(btnZoomIn);

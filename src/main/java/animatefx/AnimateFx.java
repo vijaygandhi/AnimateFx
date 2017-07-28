@@ -30,8 +30,52 @@ public class AnimateFx implements EventHandler<ActionEvent> {
                         .scaleXY(0.6, 0.8, 1.03, 1.03)
                         .scaleXY(0.8, 1.0, 1.0, 1.0)
                         .newSequence()
-                        .fade(0, 1.0, 1),
+                        .fade(0, 0.6, 1),
                 onFinished);
+    }
+
+    public static void bounceInDown(Node node, long millis, int distance, EventHandler<ActionEvent> onFinished) {
+        node.setOpacity(0);
+        node.setTranslateY(-distance);
+        animate(
+                node,
+                millis,
+                animation -> animation
+                        .newSequence(Interpolator.SPLINE(0.215, 0.610, 0.355, 1.000))
+                        .moveY(0, 0.4, 0)
+                        .moveY(0.4, 0.6, -20)
+                        .moveY(0.6, 0.75, 0)
+                        .moveY(0.75, 0.9, -5)
+                        .moveY(0.9, 1.0, 0)
+                        .newSequence()
+                        .fade(0, 0.6, 1),
+                onFinished);
+    }
+
+    public static void bounceInUp(Node node, long millis, int distance, EventHandler<ActionEvent> onFinished) {
+        bounceInDown(node, millis, -distance, onFinished);
+    }
+
+    public static void bounceInLeft(Node node, long millis, int distance, EventHandler<ActionEvent> onFinished) {
+        node.setOpacity(0);
+        node.setTranslateX(-distance);
+        animate(
+                node,
+                millis,
+                animation -> animation
+                        .newSequence(Interpolator.SPLINE(0.215, 0.610, 0.355, 1.000))
+                        .moveX(0, 0.4, 0)
+                        .moveX(0.4, 0.6, distance > 0 ? -20 : 20)
+                        .moveX(0.6, 0.75, 0)
+                        .moveX(0.75, 0.9, distance > 0 ? -5 : 5)
+                        .moveX(0.9, 1.0, 0)
+                        .newSequence()
+                        .fade(0, 0.6, 1),
+                onFinished);
+    }
+
+    public static void bounceInRight(Node node, long millis, int distance, EventHandler<ActionEvent> onFinished) {
+        bounceInLeft(node, millis, -distance, onFinished);
     }
 
     public static void fadeIn(Node node, long millis, EventHandler<ActionEvent> onFinished) {
@@ -70,7 +114,7 @@ public class AnimateFx implements EventHandler<ActionEvent> {
                 animation -> animation
                         .fade(0, 1, 0)
                         .newSequence()
-                        .moveX(distance),
+                        .moveX(0, 1, distance),
                 onFinished);
     }
 
@@ -158,22 +202,25 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         fadeTransition.setToValue(opacity);
+        fadeTransition.setInterpolator(sequenceInterpolator);
         sequence.getChildren().add(fadeTransition);
         return this;
     }
 
-    public AnimateFx moveX(int distance) {
+    public AnimateFx moveX(double startTimeFraction, double endTimeFraction, int distance) {
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.millis(duration));
-        translateTransition.setByX(distance);
+        translateTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
+        translateTransition.setToX(distance);
+        translateTransition.setInterpolator(sequenceInterpolator);
         sequence.getChildren().add(translateTransition);
         return this;
     }
 
-    public AnimateFx moveY(double startTimeFraction, double endTimeFraction, double distanceY) {
+    public AnimateFx moveY(double startTimeFraction, double endTimeFraction, double distance) {
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.millis(duration));
-        translateTransition.setByY(distanceY);
+        translateTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
+        translateTransition.setToY(distance);
+        translateTransition.setInterpolator(sequenceInterpolator);
         sequence.getChildren().add(translateTransition);
         return this;
     }
@@ -183,6 +230,7 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         scaleTransition.setToX(unitScaleX * scaleX);
+        scaleTransition.setInterpolator(sequenceInterpolator);
         sequence.getChildren().add(scaleTransition);
         return this;
     }
@@ -192,6 +240,7 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         scaleTransition.setToY(unitScaleY * scaleY);
+        scaleTransition.setInterpolator(sequenceInterpolator);
         sequence.getChildren().add(scaleTransition);
         return this;
     }
