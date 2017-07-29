@@ -141,6 +141,20 @@ public class AnimateFx implements EventHandler<ActionEvent> {
                 onFinished);
     }
 
+    public static void rotateIn(Node node, long millis, double rotation, EventHandler<ActionEvent> onFinished) {
+        double initialRotation =  node.getRotate();
+        node.setOpacity(0);
+        node.setRotate(initialRotation - rotation);
+        animate(
+                node,
+                millis,
+                animation -> animation
+                        .rotate(0, 1, initialRotation + rotation)
+                        .newSequence()
+                        .fade(0, 1, 1),
+                onFinished);
+    }
+
     public static void rubberBand(Node node, long millis, EventHandler<ActionEvent> onFinished) {
         animate(node,
                 millis,
@@ -198,7 +212,7 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         this.parallel.setOnFinished(this);
     }
 
-    public AnimateFx fade(double startTimeFraction, double endTimeFraction, float opacity) {
+    private AnimateFx fade(double startTimeFraction, double endTimeFraction, float opacity) {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
         fadeTransition.setToValue(opacity);
@@ -207,25 +221,34 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         return this;
     }
 
-    public AnimateFx moveX(double startTimeFraction, double endTimeFraction, int distance) {
+    private AnimateFx moveX(double startTimeFraction, double endTimeFraction, int distance) {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
-        translateTransition.setToX(distance);
+        translateTransition.setByX(distance);
         translateTransition.setInterpolator(sequenceInterpolator);
         sequence.getChildren().add(translateTransition);
         return this;
     }
 
-    public AnimateFx moveY(double startTimeFraction, double endTimeFraction, double distance) {
+    private AnimateFx moveY(double startTimeFraction, double endTimeFraction, double distance) {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
-        translateTransition.setToY(distance);
+        translateTransition.setByY(distance);
         translateTransition.setInterpolator(sequenceInterpolator);
         sequence.getChildren().add(translateTransition);
         return this;
     }
 
-    public AnimateFx scaleX(double startTimeFraction, double endTimeFraction, double scaleX) {
+    private AnimateFx rotate(double startTimeFraction, double endTimeFraction, double angle) {
+        RotateTransition transition = new RotateTransition();
+        transition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
+        transition.setByAngle(angle);
+        transition.setInterpolator(sequenceInterpolator);
+        sequence.getChildren().add(transition);
+        return this;
+    }
+
+    private AnimateFx scaleX(double startTimeFraction, double endTimeFraction, double scaleX) {
         double unitScaleX = node.getScaleX();
         ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));
@@ -235,7 +258,7 @@ public class AnimateFx implements EventHandler<ActionEvent> {
         return this;
     }
 
-    public AnimateFx scaleY(double startTimeFraction, double endTimeFraction, double scaleY) {
+    private AnimateFx scaleY(double startTimeFraction, double endTimeFraction, double scaleY) {
         double unitScaleY = node.getScaleY();
         ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(Duration.millis(duration * endTimeFraction - duration * startTimeFraction));

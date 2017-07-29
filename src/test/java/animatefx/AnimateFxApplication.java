@@ -64,6 +64,9 @@ public class AnimateFxApplication extends Application {
         Button btnPulse = new Button("pulse");
         btnPulse.setOnAction(e -> AnimateFx.pulse(animationNode, 500, 1.2, onFinished));
 
+        Button btnRotateIn = new Button("rotateIn");
+        btnRotateIn.setOnAction(e -> AnimateFx.rotateIn(animationNode, 1000, 180, onFinished));
+
         Button btnRubberBand = new Button("rubberBand");
         btnRubberBand.setOnAction(e -> AnimateFx.rubberBand(animationNode, 500, onFinished));
 
@@ -73,6 +76,7 @@ public class AnimateFxApplication extends Application {
         VBox controls = new VBox();
         controls.getChildren().addAll(btnBounceIn, btnBounceInDown, btnBounceInUp, btnBounceInLeft, btnBounceInRight);
         controls.getChildren().addAll(btnFadeIn, btnFadeInDown, btnFadeInUp, btnFadeOutLeft, btnFadeOutRight);
+        controls.getChildren().addAll(btnRotateIn);
         controls.getChildren().addAll(btnFlash, btnPulse, btnRubberBand);
         controls.getChildren().addAll(btnZoomIn);
 
